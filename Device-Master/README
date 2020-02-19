@@ -26,6 +26,9 @@ Planning on changing file structure to this format:
   |   ├── index.js
   |   └── routes2.js
   |
+  ├── Helpers
+  |   └── helper.js
+  |
   ├── app.js
   |
   ├── package.json
