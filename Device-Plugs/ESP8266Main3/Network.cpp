@@ -72,7 +72,7 @@ void Network::setupWiFi() {
   resetNetwork();
 
   WiFi.begin(cfg->ssid, cfg->password);
-  Serial.println("Connecting");
+  Serial.println(String("Connecting to ") + cfg->ssid);
 
   int timeoutCounter = 0;
   for(int i = 0; i <= timeoutThreshold; i++) {
@@ -84,7 +84,7 @@ void Network::setupWiFi() {
     } else if (i == timeoutThreshold) {
       setupAP(); 
     }
-    Serial.print(".");
+    Serial.print("."); // Prints a carrige return after 2 seconds somehow
     delay(1000);
   }
 }

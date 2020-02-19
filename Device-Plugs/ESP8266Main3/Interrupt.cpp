@@ -67,7 +67,7 @@ void Interrupt::handle() {
         
     if (timeGap(IS_GREATER_THAN, validISRThreshold)) { 
 
-      Serial.print(".");
+      Serial.print("<>");
 
       if (mode == 0) {
         if(released() && timeGap(IS_GREATER_THAN, 2000)) {

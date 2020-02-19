@@ -13,11 +13,9 @@
 
 extern ESP8266WebServer server;
 
-const char* init_ssid = "TP-Link_6F62";
-
-
-const char* init_password = "78059757";
-const char* init_masterIP = "192.168.0.160";
+const char* init_ssid = "IdeasLab";
+const char* init_password = "Friday!23";
+const char* init_masterIP = "192.168.0.110";
 
 const char* APssid = "Plug - ";
 const char* APpassword = "esp";
@@ -43,6 +41,8 @@ void setup() {
   reqHandle = new ESP_RequestHandler();
   reqSend = new ESP_RequestSender();
   util = new Utilities();
+
+  cfg->save(cfg->ID, init_ssid, init_password, init_masterIP, "resetting wifi");
 
   gpio->blink(1,1);
   Interrupt::setup();
