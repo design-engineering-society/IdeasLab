@@ -5,27 +5,26 @@ Planning on changing file structure to this format:
   |
   ├── node_modules
   |
-  ├── User
-  |   ├── public
-  |   |   ├── media
-  |   |   ├── javascripts
-  |   |   ├── views
-  |   |   └── style sheets
-  |   |
-  |   ├── routes
-  |      ├── index.js
-  |      └── users.js
+  ├── User   
+  |   ├── media
+  |   ├── javascripts
+  |   ├── views
+  |   └── style sheets
   |
-  ├── Operator
-  |   ├── public
-  |   |   ├── media
-  |   |   ├── javascripts
-  |   |   ├── views
-  |   |   └── style sheets
-  |   |
-  |   ├── routes
-  |       ├── index.js
-  |       └── users.js
+  ├── Operator   
+  |   ├── media
+  |   ├── javascripts
+  |   ├── views
+  |   └── style sheets
+  |
+  ├── Shared   
+  |   ├── media
+  |   ├── javascripts
+  |   └── style sheets  
+  |
+  ├── Routes   
+  |   ├── index.js
+  |   └── routes2.js
   |
   ├── app.js
   |
