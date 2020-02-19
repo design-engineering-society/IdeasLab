@@ -36,6 +36,7 @@ Planning on changing file structure to this format:
 
 ##ToDo
 Update file paths to images in db
+Reformat choose equipment page to match actual setup
 Split index.js in to app.js and several smaller route.js files.
 
 Move mail auth to backend
