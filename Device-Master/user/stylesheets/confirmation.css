@@ -1,0 +1,52 @@
+.confirmation_wrapper {
+  margin: auto, auto;
+  text-align: center;
+}
+
+
+.msg {
+  font-family: var(--makerspaceFont);
+}
+
+.alert_msg {
+  font-family: var(--makerspaceFont);
+  color: red;
+}
+
+.small_button{
+  text-align: center;
+  width: 25%;
+  font-size: 1.3rem;
+  font-weight: 200;
+  font-family: var(--makerspaceFont);
+  color: white;
+  background-color: #1d1d1b;
+  display: inline-block;
+  margin: auto auto;
+  border-radius: 4px;
+  padding: 20px 20px;
+  cursor: pointer;
+}
+
+.cancel_button{
+  text-align: center;
+  width: 25%;
+  font-size: 1.3rem;
+  font-weight: 200;
+  font-family: var(--makerspaceFont);
+  color: white;
+  background-color: #ff6666;
+  display: inline-block;
+  margin: auto auto;
+  border-radius: 4px;
+  padding: 20px 20px;
+  cursor: pointer;
+}
+
+.small_button:hover{
+  background-color: rgb(50,50,50);
+}
+
+.cancel_button:hover{
+  background-color: #ff9999;
+}
