@@ -1,1 +1,35 @@
-Hello world
+Planning on changing file structure to this format:
+
+  ├── bin
+  |   └── www
+  |
+  ├── node_modules
+  |
+  ├── User
+  |   ├── public
+  |   |   ├── media
+  |   |   ├── javascripts
+  |   |   ├── views
+  |   |   └── style sheets
+  |   |
+  |   ├── routes
+  |      ├── index.js
+  |      └── users.js
+  |
+  ├── Operator
+  |   ├── public
+  |   |   ├── media
+  |   |   ├── javascripts
+  |   |   ├── views
+  |   |   └── style sheets
+  |   |
+  |   ├── routes
+  |       ├── index.js
+  |       └── users.js
+  |
+  ├── app.js
+  |
+  ├── package.json
+
+
+Split index.js in to app.js and several smaller route.js files.
