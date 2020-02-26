@@ -1,3 +1,5 @@
+var serverIP = "localhost:5000";
+
 function testStorage() {
     var title = document.getElementsByClassName("header_title")[0];
 
@@ -224,5 +226,19 @@ function getAccessToken(callback) {
   } else {
     // Attempt to do a hidden iframe request
     console.log('token expired')
+    refreshToken()
   }
+}
+
+
+function refreshToken(){
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+      if (this.status == 200) {
+        console.log(this.responseText);
+      }
+  };
+
+  xhr.open('GET', `http://${serverIP}/mailAuth`, true);
+  xhr.send();
 }

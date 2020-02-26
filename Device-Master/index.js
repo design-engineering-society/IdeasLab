@@ -7,6 +7,7 @@ const ping = require('ping'); // Generates ping requests
 const app = express(); // creates an instance of express. it is like the swrver object
 const dbUtil = require('./helpers/dbUtil.js'); // Utility functions for the database
 const util = require('./helpers/util.js'); // Utility functions for general stuff
+const mailAuth = require('./helpers/auth.js'); // Outlook mail api authentication
 
 const routerIP = "192.168.0.254";
 const masterIP = "192.168.0.160"; //ip of michaels mac
@@ -393,6 +394,14 @@ app.get("/testDB", (req, res) => {
         console.log(dbres);
         sendCORS(res, 200, dbres);
     });
+});
+
+// Mail authentication
+app.get("/mailAuth", async function(req,res) {
+  console.log(req.cookies)
+  const accessToken = await mailAuth.getAccessToken(req.cookies, res);
+  console.log(accessToken)
+  sendCORS(res, 200, accessToken);
 });
 
 // Reshuffles a record from the database into a more readable format //
