@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../shared/stylesheets/headers.css" />
+    <link rel="stylesheet" type="text/css" href="../../shared/stylesheets/tables.css" />
+    <link rel="stylesheet" type="text/css" href="../../shared/stylesheets/loading.css" />
+    <link rel="stylesheet" type="text/css" href="../operator/stylesheets/plugs.css" />
+    <script src="../../shared/javascripts/tables.js"></script>
+    <script src="../operator/javascripts/plugs.js"></script>
+    <title>Plugs</title>
+</head>
+
+<body onload="generateTable(Plugs_loadFunction)">
+    <div class="header">
+        <img class="headerImg" src="../../shared/media/IDEAS LAB 3.svg">
+        <div class="headerButtonsWrapper">
+            <a class="headerButton P" href="http://localhost:5000/plugs/">Plugs</a>
+            <a class="headerButton P" href="http://localhost:5000/users/">Users</a>
+            <a class="headerButton P" href="http://localhost:5000/equipment/">Equipment</a>
+            <a class="headerButton P">Records</a>
+        </div>
+    </div>
+    <div id="DG_title"></div>
+    <div class="wrapper">
+        <div id="DG" type="Plugs"></div>
+    </div>
+    <div id="loadingPopup">
+        <img id="loadingImg" src="../../shared/media/loading2.svg">
+        <div id="loadingText"></div>
+    </div>
+</body>
+
+</html>

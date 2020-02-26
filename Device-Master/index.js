@@ -3,10 +3,11 @@ const express = require('express'); // Express Framework
 const request = require('request'); // sending and hadling HTTP/HTTPS requests
 const bodyParser = require("body-parser"); // Parses data in POST request
 const path = require('path'); // Paths / directories
-const ping = require('ping'); // Generates ping requests 
+const ping = require('ping'); // Generates ping requests
 const app = express(); // creates an instance of express. it is like the swrver object
-const dbUtil = require('./dbUtil.js'); // Utility functions for the database 
-const util = require('./util.js'); // Utility functions for general stuff
+const dbUtil = require('./helpers/dbUtil.js'); // Utility functions for the database
+const util = require('./helpers/util.js'); // Utility functions for general stuff
+const mailAuth = require('./helpers/auth.js'); // Outlook mail api authentication
 
 const routerIP = "192.168.0.254";
 const masterIP = "192.168.0.160"; //ip of michaels mac
@@ -24,13 +25,15 @@ app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bo
 
 // --- ROUTING REQUESTS TO FUNCTIONS --- //
-app.get("/yeet", (req, res) => { res.sendFile(path.join(__dirname + "/root.html")); });
-app.get("/operator", (req, res) => { res.sendFile(path.join(__dirname + "/operator/operator.html")); });
-app.get("/plugs", (req, res) => { res.sendFile(path.join(__dirname + "/Plugs/Plugs.html")); });
-app.get("/users", (req, res) => { res.sendFile(path.join(__dirname + "/Users/Users.html")); });
-app.get("/equipment", (req, res) => { res.sendFile(path.join(__dirname + "/Equipment/Equipment.html")); });
-app.get("/welcome", (req, res) => { res.sendFile(path.join(__dirname + "/User_UI/choose_equipment.html")); });
-app.get("/testStorage", (req, res) => { res.sendFile(path.join(__dirname + "/User_UI/test_storage.html")); });
+// operator
+app.get("/plugs", (req, res) => { res.sendFile(path.join(__dirname + "/operator/views/plugs.html")); });
+app.get("/users", (req, res) => { res.sendFile(path.join(__dirname + "/operator/views/users.html")); });
+app.get("/mail", (req, res) => { res.sendFile(path.join(__dirname + "/operator/views/mail.html")); });
+
+// user
+app.get("/equipment", (req, res) => { res.sendFile(path.join(__dirname + "/operator/views/equipment.html")); });
+app.get("/welcome", (req, res) => { res.sendFile(path.join(__dirname + "/user/views/choose_equipment.html")); });
+app.get("/choosefile", (req, res) => { res.sendFile(path.join(__dirname + "/user/views/choose_file.html")); });
 
 // Tells the Master Device that an ESP has connected an updates the database with data for the connected ESP //
 app.post("/connect", (req, res) => {
@@ -391,6 +394,14 @@ app.get("/testDB", (req, res) => {
         console.log(dbres);
         sendCORS(res, 200, dbres);
     });
+});
+
+// Mail authentication
+app.get("/mailAuth", async function(req,res) {
+  console.log(req.cookies)
+  const accessToken = await mailAuth.getAccessToken(req.cookies, res);
+  console.log(accessToken)
+  sendCORS(res, 200, accessToken);
 });
 
 // Reshuffles a record from the database into a more readable format //

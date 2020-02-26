@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../shared/stylesheets/headers.css" />
+    <link rel="stylesheet" type="text/css" href="../../shared/stylesheets/tables.css" />
+    <link rel="stylesheet" type="text/css" href="../../shared/stylesheets/loading.css" />
+    <link rel="stylesheet" type="text/css" href="../../shared/stylesheets/actionBar.css" />
+    <link rel="stylesheet" type="text/css" href="../user/stylesheets/mailSelect.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@microsoft/microsoft-graph-client/lib/graph-js-sdk.js"></script>
+    <script src="../user/javascripts/choose_file.js"></script>
+    <script src="../user/javascripts/file_upload.js"></script>
+    <title>Testing storage</title>
+</head>
+
+  <body onload="testStorage()">
+    <div class="header">
+        <div class="header_title">Welcome Michael! Choose equipment</div>
+        <img class="headerImg" src="../../shared/media/IDEAS LAB 3.svg">
+    </div>
+    <div id='select-text' class='select-text'>
+      <p>Select a file:</p>
+    </div>
+    <form action="javascript:fileUpload();" id="mailSelect" class="mailSelect">
+    </form>
+    <!--<div id="storage"></div>-->
+  </body>
+</html>
