@@ -7,8 +7,9 @@ const app = express();
 
 const masterIP = "localhost";
 const MongoClient = require('mongodb').MongoClient;
-//var mongoURL = `mongodb://${masterIP}:27017/`;//`mongodb://${masterIP}:27017/`; - "mongodb://joshua:gtd@cluster0-2iznk.mongodb.net/test?retryWrites=true&w=majority"
-var mongoURI = "mongodb+srv://Joshua:hardik@cluster0-xkiex.mongodb.net/test?retryWrites=true&w=majority"; // "mongodb+srv://joshua:gtd@cluster0-2iznk.mongodb.net/test?retryWrites=true&w=majority"
+var mongoURI = "mongodb+srv://wpepera:bollywooddeadlines@ideaslab-bl9ja.mongodb.net/test?retryWrites=true&w=majority";
+
+var db_name = 'ideaslab_iot';
 
 module.exports = {
 
@@ -17,7 +18,7 @@ module.exports = {
         MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
 
             if (!err) {
-                db = client.db('Ideas_lab');
+                db = client.db(db_name);
                 db.collection(coll).find(query).toArray((err, dbres) => {
                     if (err) throw err;
                     //console.log("documents found");
@@ -35,7 +36,7 @@ module.exports = {
         MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
 
             if (!err) {
-                db = client.db('Ideas_lab');
+                db = client.db(db_name);
                 db.createCollection(coll, (err, res) => {
                     if (err) throw err;
                     client.close();
@@ -52,7 +53,7 @@ module.exports = {
         MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
 
             if (!err) {
-                db = client.db('Ideas_lab');
+                db = client.db(db_name);
                 db.collection(coll).insertOne(obj, (err, dbres) => {
                     if (err) throw err;
                     console.log("1 document inserted");
@@ -70,7 +71,7 @@ module.exports = {
         MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
 
             if (!err) {
-                db = client.db('Ideas_lab');
+                db = client.db(db_name);
 
                 var setObj = { $set: obj };
 
@@ -91,7 +92,7 @@ module.exports = {
         MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
 
             if (!err) {
-                db = client.db('Ideas_lab');
+                db = client.db(db_name);
 
                 var setObj = { $set: obj };
 
@@ -112,7 +113,7 @@ module.exports = {
         MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
 
             if (!err) {
-                db = client.db('Ideas_lab');
+                db = client.db(db_name);
 
                 var setObj = { $inc: obj };
 
@@ -133,7 +134,7 @@ module.exports = {
         MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
 
             if (!err) {
-                db = client.db('Ideas_lab');
+                db = client.db(db_name);
                 db.collection(coll).deleteMany(query, (err, dbres) => {
                     if (err) throw err;
                     console.log("documents deleted");

@@ -7,12 +7,19 @@ const credentials = {
   },
   auth: {
     tokenHost: 'https://login.microsoftonline.com',
-    authorizePath: 'common/oauth2/v2.0/authorize',
-    tokenPath: 'common/oauth2/v2.0/token'
+    authorizePath: 'ImperialLondon.onmicrosoft.com/oauth2/v2.0/authorize',
+    tokenPath: 'ImperialLondon.onmicrosoft.com/oauth2/v2.0/token'
   }
 };
 
+const tokenConfig = {
+  username:process.env.ADMIN_USERNAME,
+  password:process.env.ADMIN_PASSWORD,
+  scope:process.env.APP_SCOPES,
+};
+
 const oauth2 = require('simple-oauth2').create(credentials);
+
 
 function getAuthUrl() {
   const returnVal = oauth2.authorizationCode.authorizeURL({
@@ -24,6 +31,47 @@ function getAuthUrl() {
 }
 
 exports.getAuthUrl = getAuthUrl;
+
+
+async function ownerAuth(res){
+  const credentials = {
+    client: {
+      id: process.env.APP_ID,
+      secret: process.env.APP_PASSWORD,
+    },
+    auth: {
+      tokenHost: 'https://login.microsoftonline.com',
+      authorizePath: 'ImperialLondon.onmicrosoft.com/oauth2/v2.0/authorize',
+      tokenPath: 'ImperialLondon.onmicrosoft.com/oauth2/v2.0/token'
+    }
+  };
+
+  const tokenConfig = {
+    username:process.env.ADMIN_USERNAME,
+    password:process.env.ADMIN_PASSWORD,
+    scope:process.env.APP_SCOPES,
+  };
+
+  const oauth2 = require('simple-oauth2').create(credentials);
+
+  console.log(credentials);
+  console.log(tokenConfig);
+
+  try {
+    const result = await oauth2.ownerPassword.getToken(tokenConfig);
+    const token = oauth2.accessToken.create(result);
+
+    console.log('Token created: ', token.token);
+    console.log('Token created');
+    saveValuesToCookie(token, res);
+    return token.token.access_token;
+
+  } catch (error) {
+   console.log('Access Token Error', error.message);
+  }
+}
+
+exports.ownerAuth = ownerAuth;
 
 async function getTokenFromCode(auth_code, res) {
   let result = await oauth2.authorizationCode.getToken({

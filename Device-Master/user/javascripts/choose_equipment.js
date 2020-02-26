@@ -1,6 +1,7 @@
 var serverIP = "localhost:5000";
 var equipment = [];
 var models = [];
+var octoprints = [];
 var userData;
 
 function findUser(cardID) {
@@ -44,17 +45,41 @@ function loadModels() { // Requests to load all the ESP data from the database
             var data = JSON.parse(this.responseText);
             if (!data["error"]) {
                 console.log(data);
-                console.log(`Loaded ${Object.keys(data).length} Equipment(s) from database`);
+                console.log(`Loaded ${Object.keys(data).length} Model(s) from database`);
                 models = data;
             } else {
                 data = [];
                 console.log("Error loading models");
             }
+            loadOctoprints();
+        }
+    };
+
+    xhr.open('GET', `http://${serverIP}/load?collection=models`, true); // Retrive ESP data
+    xhr.send();
+}
+
+function loadOctoprints() {
+
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+
+        if (this.status == 200) {
+
+            var data = JSON.parse(this.responseText);
+            if (!data["error"]) {
+                console.log(data);
+                console.log(`Loaded octoprint data from database`);
+                octoprints = data;
+            } else {
+                data = [];
+                console.log("Error loading octoprint data");
+            }
             loadEquipment();
         }
     };
 
-    xhr.open('GET', `http://${serverIP}/load?collection=Model_info`, true); // Retrive ESP data
+    xhr.open('GET', `http://${serverIP}/load?collection=octoprint`, true); // Retrive ESP data
     xhr.send();
 }
 
@@ -90,9 +115,11 @@ function loadEquipment() { // Requests to load all the ESP data from the databas
         }
     };
 
-    xhr.open('GET', `http://${serverIP}/load?collection=Equipment_info`, true); // Retrive ESP data
+    xhr.open('GET', `http://${serverIP}/load?collection=equipment`, true); // Retrive ESP data
     xhr.send();
 }
+
+
 
 function combineEquipmentData() {
 
@@ -104,28 +131,40 @@ function combineEquipmentData() {
                 break;
             }
         }
+
+        for (var k = 0; k < octoprints.length; k++) {
+            if (equipment[i]["octoprint_id"] == octoprints[k]["_id"] ) {
+
+                equipment[i]["ip"] = octoprints[k]["ip"];
+                equipment[i]["api_key"] = octoprints[k]["api_key"];
+                break;
+            }
+        }
+
     }
 }
 
 function generateEqupmentTable() {
 
     var grid = document.getElementById("equipment_grid");
+
     for (var i = 0; i < equipment.length; i++) {
+      var cell = createElem("DIV", [["class", "equipment_cell"], ["onclick", `sendEquipmentSelectionData("${equipment[i]["_id"]}")`]], grid);
+      var cellTop = createElem("DIV", [["class", "equipment_cell_top"]], cell);
+      var cellImg = createElem("IMG", [["class", "equipment_image"], ["src", loadImage(equipment[i]["model"])]], cellTop);
+      var cellBottom = createElem("DIV", [["class", "equipment_cell_bottom"], ["innerHTML", equipment[i]["name"]]], cell);
 
-        var cell = createElem("DIV", [["class", "equipment_cell"], ["onclick", `sendEquipmentSelectionData("${equipment[i]["id"]}")`]], grid);
-        var cellTop = createElem("DIV", [["class", "equipment_cell_top"]], cell);
-        var cellImg = createElem("IMG", [["class", "equipment_image"], ["src", loadImage(equipment[i]["model"])]], cellTop);
-        var cellBottom = createElem("DIV", [["class", "equipment_cell_bottom"], ["innerHTML", equipment[i]["name"]]], cell);
-
-        if (!userData["Permissions"].includes(equipment[i]["model"])) {
-            cell.setAttribute("class", "equipment_cell_unavailable");
-            cell.setAttribute("onclick", "");
-            cellImg.setAttribute("style", "opacity: 0.5");
-            console.log(`No permission for ${equipment[i]["model"]}`);
-        } else {
-            console.log(`Permission for ${equipment[i]["model"]}`);
-        }
-    }
+      /*
+      if (!userData["Permissions"].includes(equipment[i]["model"])) {
+          cell.setAttribute("class", "equipment_cell_unavailable");
+          cell.setAttribute("onclick", "");
+          cellImg.setAttribute("style", "opacity: 0.5");
+          console.log(`No permission for ${equipment[i]["model"]}`);
+      } else {
+          console.log(`Permission for ${equipment[i]["model"]}`);
+      }
+      */
+  }
 }
 
 function loadImage(model) {
@@ -157,7 +196,6 @@ function createElem(type, attributes, parent) {
 }
 
 function sendEquipmentSelectionData(id) {
-
     var data = {
         card_id: "",
         equipment_id: id

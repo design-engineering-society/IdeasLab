@@ -3,10 +3,11 @@ function checkout() {
     var equipment = JSON.parse(sessionStorage.equipment);
     var fileData = JSON.parse(sessionStorage.fileData)
 
+
     for (var i = 0; i < equipment.length; i++) {
-        if (equipmentSelectionData["equipment_id"] == equipment[i]["id"]) {
-          equipmentSelectionData['ip'] = 'b2.local';
-          equipmentSelectionData['api_key'] = '0920C546396B4E94BDFDDF526FE7E14E';
+        if (equipmentSelectionData["equipment_id"] == equipment[i]["_id"]) {
+          equipmentSelectionData['ip'] = equipment[i]["ip"];
+          equipmentSelectionData['api_key'] = equipment[i]["api_key"];
           checkoutLoad(equipmentSelectionData, fileData);
           break;
         }
@@ -14,16 +15,20 @@ function checkout() {
 }
 
 function checkoutLoad(equipmentSelectionData, fileData){
+  console.log(equipmentSelectionData)
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (this.status == 200) {
       printData = JSON.parse(this.response);
-
+      console.log(printData);
       // Check there is enough balance in account to print
       enoughBalance = true;
       buildFileDisplay(printData, enoughBalance);
       buildHtmlTable(fileTable);
       buildButtons(enoughBalance, equipmentSelectionData);
+    }
+    else {
+      console.log(this.responseText);
     }
   }
   xhr.open('GET', `http://${equipmentSelectionData['ip']}/api/files/local/${fileData['path']}`, true);

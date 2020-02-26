@@ -1,14 +1,16 @@
 var serverIP = "localhost:5000";
 
-function testStorage() {
+function loadFiles() {
     var title = document.getElementsByClassName("header_title")[0];
 
     var equipmentSelectionData = JSON.parse(sessionStorage.equipmentSelectionData);
     var equipment = JSON.parse(sessionStorage.equipment);
 
+    console.log(equipment)
+
     for (var i = 0; i < equipment.length; i++) {
-        if (equipmentSelectionData["equipment_id"] == equipment[i]["id"]) {
-            title.innerHTML = `The selected item was: ${equipment[i]["name"]}`;
+        if (equipmentSelectionData["equipment_id"] == equipment[i]["_id"]) {
+            title.innerHTML = `Choose a File to print on: ${equipment[i]["name"]}`;
             // retrieve equipment ip and api_key
             // if ip and api_key and can be uploaded, create file upload
             // store printer info in session
@@ -214,31 +216,14 @@ function getUserMessages(user, callback) {
   });
 }
 
-function getAccessToken(callback) {
-  var now = new Date().getTime();
-  var isExpired = now > parseInt(sessionStorage.tokenExpires);
-  // Do we have a token already?
-  if (sessionStorage.accessToken && !isExpired) {
-    // Just return what we have
-    if (callback) {
-      callback(sessionStorage.accessToken);
-    }
-  } else {
-    // Attempt to do a hidden iframe request
-    console.log('token expired')
-    refreshToken()
-  }
-}
 
-
-function refreshToken(){
+function getAccessToken(callback){
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
       if (this.status == 200) {
-        console.log(this.responseText);
+        callback(this.responseText);
       }
   };
-
   xhr.open('GET', `http://${serverIP}/mailAuth`, true);
   xhr.send();
 }

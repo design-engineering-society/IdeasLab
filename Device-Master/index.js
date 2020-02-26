@@ -7,7 +7,11 @@ const ping = require('ping'); // Generates ping requests
 const app = express(); // creates an instance of express. it is like the swrver object
 const dbUtil = require('./helpers/dbUtil.js'); // Utility functions for the database
 const util = require('./helpers/util.js'); // Utility functions for general stuff
+
 const mailAuth = require('./helpers/auth.js'); // Outlook mail api authentication
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+require('dotenv').config({path: __dirname + '/.env'})
 
 const routerIP = "192.168.0.254";
 const masterIP = "192.168.0.160"; //ip of michaels mac
@@ -23,6 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bo
+app.use(cookieParser());
+app.use(session({resave: true, saveUninitialized: true, secret: 'XCR3rsasa%RDHHH', cookie: { maxAge: 60000 }}));
+
 
 // --- ROUTING REQUESTS TO FUNCTIONS --- //
 // operator
@@ -332,18 +339,6 @@ app.get("/load", (req, res) => {
     });
 });
 
-// (Defunct) //
-app.get("/loadEquipment", (req, res) => {
-
-    // var collection = req.query["collection"];
-
-    // dbUtil.findExt(collection, {}, dbres => {
-    //     //console.log(dbres);
-    //     sendCORS(res, 200, dbres);
-    // });
-
-    console.log("hello world");
-});
 
 // Loads the status and information about all plugs by sending a request to all plugs on the database //
 app.get("/loadPlugs", (req, res) => { // load the ESP data from database
@@ -398,10 +393,14 @@ app.get("/testDB", (req, res) => {
 
 // Mail authentication
 app.get("/mailAuth", async function(req,res) {
-  console.log(req.cookies)
   const accessToken = await mailAuth.getAccessToken(req.cookies, res);
-  console.log(accessToken)
-  sendCORS(res, 200, accessToken);
+  if (accessToken){
+    sendCORS(res, 200, accessToken);
+  } else {
+    const newToken = await mailAuth.ownerAuth(res);
+    sendCORS(res, 200, newToken);
+  }
+
 });
 
 // Reshuffles a record from the database into a more readable format //

@@ -12,15 +12,12 @@ function fileUpload(){
     var form = new FormData();
 
     for (var i = 0; i < equipment.length; i++) {
-        if (equipmentSelectionData["equipment_id"] == equipment[i]["id"]) {
+        if (equipmentSelectionData["equipment_id"] == equipment[i]["_id"]) {
             var host = 'http://'+equipment[i]["ip"];
             var api_key = equipment[i]["api_key"];
             break;
         }
     }
-
-    host = 'http://b2.local';
-    api_key = '0920C546396B4E94BDFDDF526FE7E14E';
 
     var myblob = new Blob([file_content], {
         type: 'application/octet-stream'
