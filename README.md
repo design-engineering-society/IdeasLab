@@ -12,17 +12,13 @@ Below summarises the contents of the 3 broad folders in this repository:
 ## Device-Master
 The device master folder contains all the code which runs the master device. **Index.js** is the hub for all of the code, using ExpressJS to route to all pages and communicate with the external database. The code is then split into 4 main folders:
 
-### User
-Code for the user facing side of the master device, such as choosing equipment and uploading 3D printer files
+**User** - Code for the user facing side of the master device, such as choosing equipment and uploading 3D printer files
 
-### Operator
-Code for the operator facing side of the master device, such as debugging ESP8266 smart switches, viewing and editing the configuration of equipment / switches, and altering user previleges
+**Operator** - Code for the operator facing side of the master device, such as debugging ESP8266 smart switches, viewing and editing the configuration of equipment / switches, and altering user previleges
 
-### Shared
-Code which is shared between the user and operator sides, such as the table structurig code
+**Shared** - Code which is shared between the user and operator sides, such as the table structurig code
 
-### Helper
-Code which contains helper/utility functions that are used throughout the program
+**Helper** - Code which contains helper/utility functions that are used throughout the program
 
 
 ## ESP8266Main3
