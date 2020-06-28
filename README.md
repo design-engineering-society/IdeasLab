@@ -22,7 +22,7 @@ The device master folder contains all the code which runs the master device. **I
 
 
 ## ESP8266Main3
-The ESP8266 Smart Switch folder contains all the code which is run on the smart switches. The code is written in C++ using the Arduino IDE. A USB-to-serial adapter is then used to deploy the Arduino code on to the ESP8266.
+The ESP8266 Smart Switch folder contains all the code which is run on the smart switches. The code is written in C++ using the Arduino IDE. A USB-to-serial adapter is then used to deploy the Arduino code on to the ESP8266
 
 
 ## Database Schemas
